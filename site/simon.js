@@ -6,6 +6,7 @@ let SIMON_COLORS = [
 ];
 
 let SIMON_STATES = {
+  INACTIVE: 'inactive',
   FRESH: 'fresh',
   PLAYING_CHALLENGE: 'playing_challenge',
   READY: 'ready',
@@ -14,7 +15,7 @@ let SIMON_STATES = {
 
 function newSimon() {
   return {
-    state: 'fresh',
+    state: SIMON_STATES.INACTIVE,
     challenge: [],
     step: 0,
   };
@@ -24,8 +25,12 @@ function getRandomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+function simonIsInactive(simon) {
+  return simon.state === SIMON_STATES.INACTIVE;
+}
+
 function simonIsFinished(simon) {
-  return simon.state === 'finished';
+  return simon.state === SIMON_STATES.FINISHED;
 }
 
 function simonIsChallengeComplete(simon) {
@@ -47,11 +52,12 @@ function simonMakeMove(simon, move) {
       simon.challenge.push(newColor);
     }
   } else {
-    simon.state = 'finished';
+    simon.state = SIMON_STATES.FINISHED;
   }
 }
 
 function simonStart(simon) {
+  simon.state = SIMON_STATES.FRESH;
   simon.challenge = [getRandomElement(SIMON_COLORS)];
 }
 

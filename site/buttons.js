@@ -139,6 +139,7 @@ let noteFrequencies = {
 };
 
 let context;
+let simon = newSimon();
 
 function hasKey(object, prop) {
   return Object.prototype.hasOwnProperty.call(object, prop);
@@ -172,34 +173,32 @@ function playFreqWithWaveform(frequency, waveform) {
 }
 
 function handleClick(simon, buttonColor) {
-  if (simonIsFinished(simon)) {
+  if (simonIsInactive(simon) || simonIsFinished(simon)) {
     return;
   }
 
   simonMakeMove(simon, buttonColor);
 
   if (simonIsChallengeFresh(simon)) {
-    console.log(simon.challenge);
+    setTimeout(() => {
+      pressChallengeButtons(simon);
+    }, 1000)
   }
 
-  // if (simonIsFinished(simon)) {
-  //   let score = simonGetScore(simon);
-  //   alert(`Game over! Your score is ${score}`);
+  if (simonIsFinished(simon)) {
+    let score = simonGetScore(simon);
+    simon.state = SIMON_STATES.FINISHED;
 
-  //   $('.simon-button').addClass('inactive');
-  // }
+    alert(`Game over! Your score is ${score}`);
+  }
 }
 
 let buttonNotes = {
   'green': 'G4',
-  'red': 'E4',
+  'red': 'Eb4',
   'yellow': 'C4',
   'blue': 'G3',
 };
-
-let simon = newSimon();
-
-simonStart(simon);
 
 function fakeClick(button, duration) {
   pressButton(button);
@@ -224,10 +223,14 @@ function pressButtons(colors, delay) {
   }, delay);
 }
 
-$('#simon-start').on('click', function() {
-  let colors = ['red', 'red', 'green', 'blue', 'red', 'yellow'];
+function pressChallengeButtons(simon) {
+  pressButtons(simon.challenge, 500);
+}
 
-  pressButtons(colors, 500);
+$('#simon-start').on('click', function() {
+  simonStart(simon);
+
+  pressChallengeButtons(simon);
 });
 
 function pressButton(color) {
@@ -241,16 +244,19 @@ function pressButton(color) {
 function releaseButton(color) {
   let button = document.getElementById(color);
   $(button).removeClass('light-up');
-
-  // handleClick(simon, color);
 }
 
 $('.simon-button').on('mousedown', function() {
-  pressButton($(this).attr('id'));
+  let buttonColor = $(this).attr('id');
+
+  pressButton(buttonColor);
 });
 
 $('.simon-button').on('mouseup', function() {
-  releaseButton($(this).attr('id'));
+  let buttonColor = $(this).attr('id');
+  releaseButton(buttonColor)
+
+  handleClick(simon, buttonColor);
 });
 
 $(document).on('keydown', function(event) {
@@ -279,8 +285,9 @@ $(document).on('keyup', function(event) {
   };
 
   if (hasKey(keyToColor, char)) {
-    let color = keyToColor[char];
+    let buttonColor = keyToColor[char];
 
-    releaseButton(keyToColor[char]);
+    releaseButton(buttonColor);
+    handleClick(simon, buttonColor);
   }
 });
