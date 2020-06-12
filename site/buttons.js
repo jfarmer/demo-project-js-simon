@@ -92,7 +92,9 @@ function pressButton(color) {
 
 
   let chordFlavor = $("#chord option:selected").val();
-  playNote(chords[chordFlavor][color], 'sawtooth');
+  let waveform = $('#waveform option:selected').val();
+
+  playNote(chords[chordFlavor][color], waveform);
 }
 
 function releaseButton(color) {
