@@ -28,6 +28,7 @@ html {
   grid-row: auto auto;
   grid-column-gap: 20px;
   grid-row-gap: 20px;
+  text-align: center;
 }
 
 .simon-container .simon-button {
@@ -55,4 +56,16 @@ html {
 
 .simon-button.blue {
   background-color: #2185D0;
+}
+
+.simon-button.inactive {
+  filter: grayscale(90%);
+}
+
+.simon-button {
+  transition: filter 0.05s ease-in-out;
+}
+
+.simon-button.light-up {
+  filter: brightness(1.25);
 }
