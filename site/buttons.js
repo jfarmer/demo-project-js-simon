@@ -193,12 +193,32 @@ function handleClick(simon, buttonColor) {
   }
 }
 
-let buttonNotes = {
-  'green': 'G4',
-  'red': 'Eb4',
-  'yellow': 'C4',
-  'blue': 'G3',
-};
+let chords = {
+  'major': {
+    'green': 'G4',
+    'red': 'E4',
+    'yellow': 'C4',
+    'blue': 'G3',
+  },
+  'minor': {
+    'green': 'G4',
+    'red': 'Eb4',
+    'yellow': 'C4',
+    'blue': 'G3',
+  },
+  'diminished': {
+    'green': 'Gb4',
+    'red': 'Eb4',
+    'yellow': 'C4',
+    'blue': 'Gb3',
+  },
+  'sus2': {
+    'green': 'G4',
+    'red': 'Eb4',
+    'yellow': 'D4',
+    'blue': 'G3',
+  },
+}
 
 function fakeClick(button, duration) {
   pressButton(button);
@@ -238,7 +258,9 @@ function pressButton(color) {
 
   $(button).addClass('light-up');
 
-  playNote(buttonNotes[color], 'sawtooth');
+
+  let chordFlavor = $("#chord option:selected").val();
+  playNote(chords[chordFlavor][color], 'sawtooth');
 }
 
 function releaseButton(color) {
