@@ -5,15 +5,15 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "jsdoc": "^3.6.3",
+    "eslint": "^8.15.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-standard": "^4.1.0",
+    "jsdoc": "^3.6.10",
     "readline-sync": "^1.4.10",
-    "surge": "^0.21.6"
+    "surge": "^0.23.1"
   },
   "scripts": {
     "docs": "npx jsdoc -c ./.jsdoc.conf.json",
